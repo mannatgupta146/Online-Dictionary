@@ -1,3 +1,4 @@
+/* General Styles */
 * {
   margin: 0;
   padding: 0;
@@ -13,11 +14,18 @@ body {
   background: cyan;
 }
 
-::selection {
-  color: #fff;
-  background: cyan;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
+/* Wrapper */
 .wrapper {
   width: 420px;
   border-radius: 7px;
@@ -26,68 +34,69 @@ body {
   box-shadow: 7px 7px 20px rgba(0, 0, 0, 0.05);
 }
 
-.wrapper header {
+/* Header */
+header h1 {
   font-size: 28px;
   font-weight: 500;
   text-align: center;
+  color: #333;
 }
 
-.wrapper .search {
+/* Search Bar */
+.search-bar {
   position: relative;
+  display: flex;
+  align-items: center;
   margin: 35px 0 18px;
 }
 
-.search input {
+.search-bar input {
   height: 53px;
-  width: 100%;
+  width: calc(100% - 100px);
   outline: none;
   font-size: 16px;
   border-radius: 5px;
-  padding: 0 42px;
+  padding: 0 15px;
   border: 1px solid #999;
+  margin-right: 10px;
 }
 
-.search input:focus {
-  padding: 0 41px;
+.search-bar input:focus {
   border: 2px solid cyan;
 }
 
-.search input::placeholder {
+.search-bar input::placeholder {
   color: #B8B8B8;
 }
 
-.search :where(i, span) {
-  position: absolute;
-  top: 50%;
+.search-bar .search-button,
+.search-bar .clear-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
   color: #999;
-  transform: translateY(-50%);
 }
 
-.search i {
-  left: 18px;
-  pointer-events: none;
-  font-size: 16px;
-}
-
-.search input:focus~i {
+.search-bar .search-button:hover,
+.search-bar .clear-button:hover {
   color: cyan;
 }
 
-.search span {
-  right: 15px;
-  cursor: pointer;
-  font-size: 18px;
+.search-bar .clear-button {
   display: none;
 }
 
-.search input:valid~span {
+.search-bar input:valid ~ .clear-button {
   display: block;
 }
 
-.wrapper .info-text {
-  font-size: 13px;
+/* Info Text */
+.info-text {
+  font-size: 14px;
   color: #9A9A9A;
-  margin: -3px 0 -10px;
+  margin: -3px 0 15px;
+  text-align: center;
 }
 
 .wrapper.active .info-text {
@@ -98,94 +107,103 @@ body {
   font-weight: 500;
 }
 
-.wrapper ul {
+/* Results Section */
+.results ul {
   height: 0;
   opacity: 0;
-  padding-right: 1px;
-  overflow-y: hidden;
+  overflow: hidden;
   transition: all 0.2s ease;
 }
 
-.wrapper.active ul {
+.wrapper.active .results ul {
   opacity: 1;
-  height: 303px;
+  height: auto;
 }
 
-.wrapper ul li {
+.results ul li {
   display: flex;
   list-style: none;
   margin-bottom: 14px;
   align-items: center;
   padding-bottom: 17px;
   border-bottom: 1px solid #D9D9D9;
-  justify-content: space-between;
 }
 
-ul li:last-child {
+.results ul li:last-child {
   margin-bottom: 0;
   border-bottom: 0;
   padding-bottom: 0;
 }
 
-ul .word p {
+.results .word .details {
+  display: flex;
+  flex-direction: column;
+}
+
+.results .details p {
   font-size: 22px;
   font-weight: 500;
 }
 
-ul .word span {
+.results .details span {
   font-size: 12px;
   color: #989898;
 }
 
-ul .word i {
-  color: #999;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-ul .content {
-  max-height: 215px;
-  overflow-y: auto;
-}
-
-ul .content::-webkit-scrollbar {
-  width: 0px;
-}
-
-.content li .details {
-  padding-left: 10px;
-  border-radius: 4px 0 0 4px;
-  border-left: 3px solid cyan;
-}
-
-.content li p {
-  font-size: 17px;
-  font-weight: 500;
-}
-
-.content li span {
+.results .meaning span,
+.results .example span {
   font-size: 15px;
   color: #7E7E7E;
 }
 
-.content .synonyms .list {
+.results .synonyms .list {
   display: flex;
   flex-wrap: wrap;
 }
 
-.content .synonyms span {
+.results .synonyms .list span {
   cursor: pointer;
   margin-right: 5px;
   text-decoration: underline;
+  color: #333;
 }
 
+.results .synonyms .list span:hover {
+  color: cyan;
+}
+
+/* Scrollbar */
+.results ul {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.results ul::-webkit-scrollbar {
+  width: 5px;
+}
+
+.results ul::-webkit-scrollbar-thumb {
+  background: cyan;
+  border-radius: 5px;
+}
+
+.results ul::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+/* Media Query */
 @media (max-width: 500px) {
   .wrapper {
-      width: 90%;
-      padding: 20px;
+    width: 90%;
+    padding: 20px;
   }
-  .search input {
-      height: 45px;
-      font-size: 14px;
+
+  .search-bar input {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .results .details p {
+    font-size: 18px;
   }
 }
